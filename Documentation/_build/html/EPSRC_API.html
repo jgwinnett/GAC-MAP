@@ -1,0 +1,358 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>EPSRC API Access &#8212; UK Academic Mapping 1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="CORDIS &amp; EPSRC Mapping" href="Mappers.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="epsrc-api-access">
+<h1>EPSRC API Access<a class="headerlink" href="#epsrc-api-access" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="purpose">
+<h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
+<p>This module is used to query the Gateway To Research (GTR) API. Queries are done by posting GET requests with specifically crafted URLs.
+As such there are two main elements: constructing the URL based on user input and then posting the request and processing the request.</p>
+</div>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="from-other-modules">
+<h3>From other modules:<a class="headerlink" href="#from-other-modules" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>requests</li>
+<li>json</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="module-class-methods-and-functions">
+<h2>Module Class, Methods and Functions<a class="headerlink" href="#module-class-methods-and-functions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="api-access-class">
+<h3>API Access Class<a class="headerlink" href="#api-access-class" title="Permalink to this headline">¶</a></h3>
+<p>This class, when passed a search term, will construct a ‘search URL’, send off a HTTP Get request (with appropriate headers), and return the response.</p>
+<dl class="class">
+<dt id="EPSRC_API_access.EPSRC_API">
+<em class="property">class </em><code class="descclassname">EPSRC_API_access.</code><code class="descname">EPSRC_API</code><span class="sig-paren">(</span><em>query</em>, <em>userResponse</em><span class="sig-paren">)</span><a class="headerlink" href="#EPSRC_API_access.EPSRC_API" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="EPSRC_API_access.EPSRC_API.PostRequest">
+<code class="descname">PostRequest</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EPSRC_API_access.EPSRC_API.PostRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Posts a HTML GET request using the constructed query URL and stored JSON headers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EPSRC_API_access.EPSRC_API.URLConstructor">
+<code class="descname">URLConstructor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EPSRC_API_access.EPSRC_API.URLConstructor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combines ‘base’ URL with field selection.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EPSRC_API_access.EPSRC_API.caseAbstract">
+<code class="descname">caseAbstract</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EPSRC_API_access.EPSRC_API.caseAbstract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserts the appropriate query string when the user wishes to search against an Abstract</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EPSRC_API_access.EPSRC_API.caseRef">
+<code class="descname">caseRef</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EPSRC_API_access.EPSRC_API.caseRef" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserts the appropriate query string when the user wishes to search against a project reference number</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EPSRC_API_access.EPSRC_API.caseTitle">
+<code class="descname">caseTitle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EPSRC_API_access.EPSRC_API.caseTitle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserts the appropriate query string when the user wishes to search against an Title</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EPSRC_API_access.EPSRC_API.incorrectFieldChoice">
+<code class="descname">incorrectFieldChoice</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EPSRC_API_access.EPSRC_API.incorrectFieldChoice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called  when the lazy sanity check in inputHandler detects an erroneous user input</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EPSRC_API_access.EPSRC_API.inputHandler">
+<code class="descname">inputHandler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EPSRC_API_access.EPSRC_API.inputHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the users field choices by appending correct string values and connectors to the class’ field variable</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="stand-alone-functions">
+<h3>Stand-Alone Functions<a class="headerlink" href="#stand-alone-functions" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="EPSRC_API_access.getInput">
+<code class="descclassname">EPSRC_API_access.</code><code class="descname">getInput</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EPSRC_API_access.getInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic input request from the user - the user is prompted to select from 3 possible fields to search against. Supports selection of multiple fields in an easily breakable way (comma seperated input)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="EPSRC_API_access.explicitPostRequest">
+<code class="descclassname">EPSRC_API_access.</code><code class="descname">explicitPostRequest</code><span class="sig-paren">(</span><em>URL</em><span class="sig-paren">)</span><a class="headerlink" href="#EPSRC_API_access.explicitPostRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses the <a class="reference external" href="http://docs.python-requests.org/en/master/">requests module</a> to post a request to the GTR API.
+This must be passed a complete GTR query URL and uses a hardcoded JSON header</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="notes-on-the-gtr-api">
+<h2>Notes on the GTR API<a class="headerlink" href="#notes-on-the-gtr-api" title="Permalink to this headline">¶</a></h2>
+<p>This is an explanatory section which breaks down the syntax needed when constructing the necessary URLs for querying the GTR API.</p>
+<div class="section" id="url-construction">
+<h3>URL Construction<a class="headerlink" href="#url-construction" title="Permalink to this headline">¶</a></h3>
+<p>The base URL, which must always be the starting point is</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span>http://gtr.rcuk.ac.uk/gtr/api/
+</pre></div>
+</div>
+<p>You then select the resource type you’re enquiring after from the following list:</p>
+<ul class="simple">
+<li>organisation</li>
+<li>person</li>
+<li>project</li>
+<li>outcome</li>
+<li>fund</li>
+</ul>
+<p>To submit queries you will need to pluralise the resource (add an “s”) and end with a question mark (?) - e.g.</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span>http://gtr.rcuk.ac.uk/gtr/api/projects?
+</pre></div>
+</div>
+<p>Then construct the rest of the URL based on your target values from the following list (these are additive):</p>
+<ul class="simple">
+<li>so = sort order - sort order = A for ascending, =D for descending</li>
+<li>q=searchterm - search term</li>
+<li>p=pageresult - page of result set, starting at 1</li>
+<li>s=size - size of page, between 10 and 100</li>
+<li>f=fields - search specific fields</li>
+<li>sf = sort fields - sort by a certain fields</li>
+</ul>
+<p>Fields are special in that you will have to dig into the GTR configs to find out what fields may be searched against.
+To do this navigate in your browser of choice to <a class="reference external" href="http://gtr.rcuk.ac.uk/gtr/api/configs">http://gtr.rcuk.ac.uk/gtr/api/configs</a>/&lt;resource&gt;  (be sure to add the ‘s’) e.g.</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span>http://gtr.rcuk.ac.uk/gtr/api/configs/projects
+</pre></div>
+</div>
+<p>Tells you that the following fields are searchable:</p>
+<ul class="simple">
+<li>pro.gr - Project Reference</li>
+<li>pro.t - Project Title</li>
+<li>pro.a - Project Abstract</li>
+<li>pro.orcidID - Project’s ORCID ID</li>
+</ul>
+<p>All query parameters are separated by an ampersand (&amp;). The order of terms in the URL does not appear to matter.</p>
+<p>Say, for example, you wanted to find:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>Projects</dt>
+<dd><ul class="first last">
+<li>where ‘fish’ (q=fish)</li>
+<li>is in the ‘Project Title’ (f=pro.t)</li>
+<li>or the ‘Project Abstract’ (f=pro.a)</li>
+<li><dl class="first docutils">
+<dt>on the second page (p=2)</dt>
+<dd><ul class="first last">
+<li>where a page is size 10 (s=10)</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>You would construct the following URL:</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span>http://gtr.rcuk.ac.uk/gtr/api/projects?q=fish&amp;f=pro.t&amp;f=pro.a&amp;p=2&amp;s=10
+</pre></div>
+</div>
+<p>This URL can be used in a browser (results are displayed in XML) or sent via a py:requests HTTP-GET</p>
+</div>
+<div class="section" id="notes-on-sending-http-get-requests">
+<h3>Notes on sending HTTP GET requests<a class="headerlink" href="#notes-on-sending-http-get-requests" title="Permalink to this headline">¶</a></h3>
+<p>GTR requires that GET requests are accompanied with headers specifying the format the data is returned in.
+This is sent as a dictionary object.</p>
+<div class="highlight-json"><div class="highlight"><pre><span></span>key:&#39;accept&#39;
+value: application/vnd.rcuk.gtr.&lt;RequestedSchema&gt;
+</pre></div>
+</div>
+<p>These are already hard-coded into the request class as :</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">EPSRC_API</span><span class="o">.</span><span class="n">headerJSON</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/vnd.rcuk.gtr.json-v6&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>and</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">EPSRC_API</span><span class="o">.</span><span class="n">headerXML</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/vnd.rcuk.gtr.xml-v6&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This module by default requests the data in JSON format.</p>
+</div>
+<div class="section" id="accessing-the-json-data-via-python">
+<h3>Accessing the JSON data via Python<a class="headerlink" href="#accessing-the-json-data-via-python" title="Permalink to this headline">¶</a></h3>
+<p>The query data is returned as a JSON object. JSON objects store their data in key pairs, where another JSON object can be nested as the pair value.</p>
+<p>e.g. for a JSON object named Y</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>head</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>thing 0</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>property 1</dt>
+<dd><ul class="first last">
+<li>value</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>property 2</dt>
+<dd><ul class="first last">
+<li>value</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>thing 1</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>property 1</dt>
+<dd><ul class="first last">
+<li>value</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>property 3</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>sub-property 1</dt>
+<dd><ul class="first last">
+<li>value</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>sub-property 2</dt>
+<dd><ul class="first last">
+<li>value</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Where there are multiples of the same key (e.g. ‘thing’ in the above example) the target is referenced by its numerical position (starting from 0).</p>
+<p>In order to return the value of property 2 for thing 0 you must provide python with the full key:pair path.</p>
+<div class="highlight-Python"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="o">=</span> <span class="n">Y</span><span class="p">[</span><span class="s1">&#39;thing&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;property 2&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Or for the value of sub-property 1 of thing 1’s property 3:</p>
+<div class="highlight-Python"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="o">=</span> <span class="n">Y</span><span class="p">[</span><span class="s1">&#39;thing&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;property 3&#39;</span><span class="p">][</span><span class="s1">&#39;sub-property 2&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="gtr-api-source-documentation">
+<h3>GTR-API Source Documentation<a class="headerlink" href="#gtr-api-source-documentation" title="Permalink to this headline">¶</a></h3>
+<p>GTR’s documentation is a bit threadbare (so far as I could find). The above was deduced from the <a class="reference external" href="http://gtr.rcuk.ac.uk/resources/GtR-2-API-v1.7.pdf">GTR technical summary</a>.
+All info copyright GTR.</p>
+</div>
+</div>
+<div class="section" id="disclaimers">
+<h2>Disclaimers<a class="headerlink" href="#disclaimers" title="Permalink to this headline">¶</a></h2>
+<p>Queries are currently limited to Projects (there’s no programmatic reason, just have had no need to use other elements). This code can easily be expanded to allow wider queries.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Mappers.html" title="previous chapter">CORDIS &amp; EPSRC Mapping</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Jack Gwinnett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/EPSRC_API.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

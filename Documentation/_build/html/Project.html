@@ -1,0 +1,260 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>GAC-MAP Overview &#8212; UK Academic Mapping 1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="GAC-MAP Recipes" href="Cook-Book.html" />
+    <link rel="prev" title="Welcome to UK Academic Mapping’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="gac-map-overview">
+<h1>GAC-MAP Overview<a class="headerlink" href="#gac-map-overview" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="project-description">
+<h2>Project Description<a class="headerlink" href="#project-description" title="Permalink to this headline">¶</a></h2>
+<p>GAC-MAP (GTR and CORDIS Mapping) is a project created to simplify the process of finding details about UK based academic projects in &lt;target&gt; field.</p>
+<p>This project progresses large batches of keywords against the GTR and CORDIS datasets and returns projects where these keywords are present.</p>
+<p>As GTR &amp; CORDIS store their data differently we also ‘unify’ the data so that we finish with a set of common data-points.</p>
+</div>
+<div class="section" id="intended-use-case">
+<h2>Intended use case<a class="headerlink" href="#intended-use-case" title="Permalink to this headline">¶</a></h2>
+<p>The intended use of this tool is to enable a quick and easy way to ‘map’ UK activity in &lt;target&gt; research field. This provides immediately usable results and also preps the data for further analytics and visualization.</p>
+<p>However it can also just be used as an easier way to access data from the
+<a class="reference internal" href="EPSRC_API.html"><span class="doc">GTR API</span></a>
+or avoid having to search through CORDIS’s
+<a class="reference external" href="https://data.europa.eu/euodp/data/dataset/cordisH2020projects/resource/010f269b-9ee3-45a0-afea-c43aa1ef61ac">large .CSV file</a>
+manually.</p>
+</div>
+<div class="section" id="what-data-is-currently-stored">
+<h2>What Data is currently stored?<a class="headerlink" href="#what-data-is-currently-stored" title="Permalink to this headline">¶</a></h2>
+<p>The following is a breakdown of what data is stored by default.</p>
+<div class="section" id="unified-data">
+<h3>Unified Data<a class="headerlink" href="#unified-data" title="Permalink to this headline">¶</a></h3>
+<p>Unified data refers to the commonly shared datapoints between the EPSRC and CORDIS sources.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="82%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Data Name</th>
+<th class="head">Data Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>projName</td>
+<td>The name of the project</td>
+</tr>
+<tr class="row-odd"><td>projDesc</td>
+<td>The project’s description of the work being done.</td>
+</tr>
+<tr class="row-even"><td>projLead</td>
+<td>The lead organisation of the project.</td>
+</tr>
+<tr class="row-odd"><td>projCollab</td>
+<td>The collaborators working on the project</td>
+</tr>
+<tr class="row-even"><td>projGrouping</td>
+<td>The search term(s) that returned the given project.</td>
+</tr>
+<tr class="row-odd"><td>projSource</td>
+<td>Lists the data source point, EPSRC or CORDIS.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="epsrc-data">
+<h3>EPSRC Data<a class="headerlink" href="#epsrc-data" title="Permalink to this headline">¶</a></h3>
+<p>The following data is stored from EPSRC queries:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="73%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Data Name</th>
+<th class="head">Data Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Project ID</td>
+<td>The Project’s GTR ID</td>
+</tr>
+<tr class="row-odd"><td>Project Title</td>
+<td>The project’s Title</td>
+</tr>
+<tr class="row-even"><td>Abstract</td>
+<td>The Description of the project</td>
+</tr>
+<tr class="row-odd"><td>Lead Org ID</td>
+<td>The GTR ID of the lead organisation</td>
+</tr>
+<tr class="row-even"><td>Lead Org Name</td>
+<td>The Name of the lead organisation</td>
+</tr>
+<tr class="row-odd"><td>Department Name</td>
+<td>The Department Name (subset of the Lead Organisation)</td>
+</tr>
+<tr class="row-even"><td>Participant Org ID</td>
+<td>The GTR ID of a participant Organisation</td>
+</tr>
+<tr class="row-odd"><td>Participant Org Name</td>
+<td>The Name of a participant Organisation.</td>
+</tr>
+<tr class="row-even"><td>Project Partner ID</td>
+<td>The GTR ID of a Project Partner</td>
+</tr>
+<tr class="row-odd"><td>Project Partner Name</td>
+<td>The Name of a Project Partner</td>
+</tr>
+<tr class="row-even"><td>Grant Category</td>
+<td>The Category of Grant that money was awarded under</td>
+</tr>
+<tr class="row-odd"><td>Funding Value</td>
+<td>The amount of Funding awarded to the project</td>
+</tr>
+<tr class="row-even"><td>Funding Start Date</td>
+<td>The Date from which funding began</td>
+</tr>
+<tr class="row-odd"><td>Funding End Date</td>
+<td>The Date when funding ends.</td>
+</tr>
+<tr class="row-even"><td>Searched Term</td>
+<td>The search term(s) that returned the given project.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="cordis-data">
+<h3>CORDIS Data<a class="headerlink" href="#cordis-data" title="Permalink to this headline">¶</a></h3>
+<p>CORDIS data is extracted from the full .CSV so all the data is available. The following is an extract of the most useful datapoints.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="73%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Data Name</th>
+<th class="head">Data Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>id</td>
+<td>The CORDIS ID of the project</td>
+</tr>
+<tr class="row-odd"><td>title</td>
+<td>The project’s Title</td>
+</tr>
+<tr class="row-even"><td>startDate</td>
+<td>The startDate of the H02020 funding</td>
+</tr>
+<tr class="row-odd"><td>endDate</td>
+<td>The endDate of the H02020 funding</td>
+</tr>
+<tr class="row-even"><td>projectUrl</td>
+<td>The URL (web-access) of the project</td>
+</tr>
+<tr class="row-odd"><td>objective</td>
+<td>The Description of the project’s goals.</td>
+</tr>
+<tr class="row-even"><td>totalCost</td>
+<td>TThe Total Value of spending on the project.</td>
+</tr>
+<tr class="row-odd"><td>coordinator</td>
+<td>The Name of the lead organisation.</td>
+</tr>
+<tr class="row-even"><td>coordinatorCountry</td>
+<td>The Country of the lead organisation</td>
+</tr>
+<tr class="row-odd"><td>participants</td>
+<td>The Name(s) of Participant organisations</td>
+</tr>
+<tr class="row-even"><td>participantCountries</td>
+<td>The Countries where Participant Organisations reside</td>
+</tr>
+<tr class="row-odd"><td>subjects</td>
+<td>The search term(s) that returned the given project</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to UK Academic Mapping’s documentation!</a></li>
+      <li>Next: <a href="Cook-Book.html" title="next chapter">GAC-MAP Recipes</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Jack Gwinnett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/Project.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

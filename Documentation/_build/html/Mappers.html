@@ -1,0 +1,306 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>CORDIS &amp; EPSRC Mapping &#8212; UK Academic Mapping 1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="EPSRC API Access" href="EPSRC_API.html" />
+    <link rel="prev" title="GAC-MAP Recipes" href="Cook-Book.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="cordis-epsrc-mapping">
+<h1>CORDIS &amp; EPSRC Mapping<a class="headerlink" href="#cordis-epsrc-mapping" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="purpose">
+<h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
+<p>This module allows users to identify projects that are relevant to them from two sources - EPSRC’s ‘Gateway To Research’ and CORDIS’ Horizon 2020 Projects.
+The user must idenfy applicable keywords and storethem in ‘Trawl Keywords.txt’.
+Once done they may run one of the basic recipes in Mapping_Recipes to receive a unified list of applicable projects from both sources.
+These are exportable to both .CSV and .xlsx. If new keywords are desired they need only to be added and the list will be updated.</p>
+</div>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="from-this-project">
+<h3>From this project:<a class="headerlink" href="#from-this-project" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>EPSRC_API_access</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="from-other-modules">
+<h3>From other modules:<a class="headerlink" href="#from-other-modules" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>pandas</li>
+<li>numpy</li>
+<li>datetime</li>
+<li>openpxl</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="module-classes-and-methods">
+<h2>Module Classes and Methods<a class="headerlink" href="#module-classes-and-methods" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="mapping-unifier">
+<h3>Mapping Unifier<a class="headerlink" href="#mapping-unifier" title="Permalink to this headline">¶</a></h3>
+<p>This class is responsible for building the baseline dataframe of unified data. It is inherited by CORDIS_Mapping and EPSRC_Mapping</p>
+<dl class="class">
+<dt id="dfClassConstructor.mappingUnified">
+<em class="property">class </em><code class="descclassname">dfClassConstructor.</code><code class="descname">mappingUnified</code><a class="headerlink" href="#dfClassConstructor.mappingUnified" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="dfClassConstructor.mappingUnified.buildDF">
+<code class="descname">buildDF</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.mappingUnified.buildDF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blind build a new DataFrame using appropriate columns, use buildDFSafe() to avoid accidental overwrites</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.mappingUnified.buildDFSafe">
+<code class="descname">buildDFSafe</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.mappingUnified.buildDFSafe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if DF exists, if not build an empty DataFrame with appropriate columns and pickle it</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.mappingUnified.closeDF_UNIFIED">
+<code class="descname">closeDF_UNIFIED</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.mappingUnified.closeDF_UNIFIED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pickles the open unified DataFrame</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.mappingUnified.dropDuplicates">
+<code class="descname">dropDuplicates</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.mappingUnified.dropDuplicates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if a project is already in the unified dataframe and returns True or False</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.mappingUnified.exportDF_CSV">
+<code class="descname">exportDF_CSV</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.mappingUnified.exportDF_CSV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports the DataFrame to a .csv file</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.mappingUnified.exportDF_excel">
+<code class="descname">exportDF_excel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.mappingUnified.exportDF_excel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports the DataFrame to a .xlsx file</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.mappingUnified.getTrawlKeywords">
+<code class="descname">getTrawlKeywords</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.mappingUnified.getTrawlKeywords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens the Keyword document - currently assumes a static location in the working folder - and returns a list of the values within</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.mappingUnified.openDF">
+<code class="descname">openDF</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.mappingUnified.openDF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the existing unified DataFrame pickle and return it</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="epsrc-mapping">
+<h3>EPSRC Mapping<a class="headerlink" href="#epsrc-mapping" title="Permalink to this headline">¶</a></h3>
+<p>This class is responsible for the ingesting, refinement and transportation of information from the EPSRC gateway.</p>
+<p>The data is pulled by constructing request URLs (see <a class="reference internal" href="EPSRC_API.html"><span class="doc">API Access</span></a> for more details) and sending off WGET requests”</p>
+<p>The responses are stored in a temporary dataframe which is preserved for future pass throughs.</p>
+<p>This ‘raw’ data is then refined / transformed to condense a project’s information into a single row and kill off duplicates.</p>
+<p>Refined data is then preserved and relevant parts pushed into the the unified dataframe.</p>
+<dl class="class">
+<dt id="dfClassConstructor.EPSRC_Mapping">
+<em class="property">class </em><code class="descclassname">dfClassConstructor.</code><code class="descname">EPSRC_Mapping</code><a class="headerlink" href="#dfClassConstructor.EPSRC_Mapping" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="dfClassConstructor.EPSRC_Mapping.checkDF_REF_PreExists">
+<code class="descname">checkDF_REF_PreExists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.EPSRC_Mapping.checkDF_REF_PreExists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Autonomous checking whether the EPSRC Refined DF exists and loads it, if not creates it
+For now it’s assumed that you don’t want the ability to over-write / re-create the dataframe.
+This is probably short sighted.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.EPSRC_Mapping.checkDF_Raw_PreExists">
+<code class="descname">checkDF_Raw_PreExists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.EPSRC_Mapping.checkDF_Raw_PreExists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Autonomous checking whether the EPSRC Raw DF exists and loads it, if not creates it
+For now it’s assumed that you don’t want the ability to over-write / re-create the dataframe.
+This is probably short sighted.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.EPSRC_Mapping.datarefine">
+<code class="descname">datarefine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.EPSRC_Mapping.datarefine" title="Permalink to this definition">¶</a></dt>
+<dd><p>EPSRC stores the same project multiple times, depending on who is claiming to be the lead / who is receiving funding.
+This means that the data needs to be intelligently joined, avoiding duplicate values and resulting in a single row descring all facets of a project.</p>
+<p>We do this by using pandas groupby function to cluster projects which share the same title.
+We then identify a unique set of values from all of the projects, convert to a list and store in a dataframe series.
+The series are then appended back onto the main dataframe (so that we have the ‘only once’ projects and the ‘multiple value’ projects’ in the same instance)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.EPSRC_Mapping.goSearch">
+<code class="descname">goSearch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.EPSRC_Mapping.goSearch" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the head function for requesting and storing data from the EPSRC gateway.
+Data is stored in its ‘raw’ form - the way EPSRC stores its data means that full details of projects are often spread around multiple responses.
+Duplicates must be determined only by the Project ID, any attempts to drop duplicates on other values will end in lost data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.EPSRC_Mapping.unifyEPSRC">
+<code class="descname">unifyEPSRC</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.EPSRC_Mapping.unifyEPSRC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transports the EPSRC data into the unified Dataframe.
+Have to undertake a bit of data-wangling to make the data compliant - EPSRC distinguishes between inter-institution relationships while the unifiedDF only cares about connections generally</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cordis-mapping">
+<h3>CORDIS Mapping<a class="headerlink" href="#cordis-mapping" title="Permalink to this headline">¶</a></h3>
+<p>This class is responsible for the ingestion, processing and storage of data from the CORDIS database.</p>
+<p>Unfortunately CORDIS does not have an API, they release their data monthly via downloadable CSV files.</p>
+<p>Once downloaded these CSV files can be imported as dataframes and quickly proccessed using pandas groupby function.</p>
+<p>Countries with UK leading AND/OR participating are considered in scope.</p>
+<dl class="class">
+<dt id="dfClassConstructor.CORDIS_Mapping">
+<em class="property">class </em><code class="descclassname">dfClassConstructor.</code><code class="descname">CORDIS_Mapping</code><a class="headerlink" href="#dfClassConstructor.CORDIS_Mapping" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="dfClassConstructor.CORDIS_Mapping.checkCSVDate">
+<code class="descname">checkCSVDate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.CORDIS_Mapping.checkCSVDate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses lxml and requests to scrape the ‘modified date’ and compare it to our locally stored metadata which is created on first download.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.CORDIS_Mapping.closeDF_CORDIS">
+<code class="descname">closeDF_CORDIS</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.CORDIS_Mapping.closeDF_CORDIS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pickles the CORDIS DataFrame</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.CORDIS_Mapping.createDF_CORDIS">
+<code class="descname">createDF_CORDIS</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.CORDIS_Mapping.createDF_CORDIS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the DataFrame from stored CSV file and stores it as local variable</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.CORDIS_Mapping.downloadCSV">
+<code class="descname">downloadCSV</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.CORDIS_Mapping.downloadCSV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses Requests to post get requests from CORDIS, storing the response on disk as</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.CORDIS_Mapping.getCSV">
+<code class="descname">getCSV</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.CORDIS_Mapping.getCSV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for downloading the CORDIS dataset and creating a dataframe from it.
+To avoid wasted bandwidth the dataset should only be downloaded if a newer verison is available.</p>
+<p>CORDIS publish this information on their website - we use webscraping to get the date modified information and compare it to metadata created by our previous downloads’
+If no file exists or a newer version is available we use requests to download and store the CSV file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.CORDIS_Mapping.goSearch">
+<code class="descname">goSearch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.CORDIS_Mapping.goSearch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Responsible for searching through the CORDIS dataset and returning results.
+Projects where the UK is a coordinatorCountry and participantCountries are conidered in scope. This requires two different passthroughs of main dataframe.
+Search terms from the list are checked against the ‘objective’ descriptor for each project with matches being stored in a search results dataframe.
+The unifier is automatically called, transporting the search results into the unified dataframe,.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.CORDIS_Mapping.loadDF_CORDIS">
+<code class="descname">loadDF_CORDIS</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.CORDIS_Mapping.loadDF_CORDIS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the CORDIS DataFrame</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.CORDIS_Mapping.makeMetaData">
+<code class="descname">makeMetaData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.CORDIS_Mapping.makeMetaData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a JSON file for storing metaData about the CSV download process</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dfClassConstructor.CORDIS_Mapping.unifyCORDIS">
+<code class="descname">unifyCORDIS</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.CORDIS_Mapping.unifyCORDIS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transports the search results from CORDIS into the unified DF.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Cook-Book.html" title="previous chapter">GAC-MAP Recipes</a></li>
+      <li>Next: <a href="EPSRC_API.html" title="next chapter">EPSRC API Access</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Jack Gwinnett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/Mappers.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
