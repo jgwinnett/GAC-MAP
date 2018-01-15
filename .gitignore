@@ -1,0 +1,11 @@
+# Created data-storage files #
+
+*.csv
+*.xlsx
+*.json
+*.pickle
+
+# pycache folder #
+
+__pycache__
+
