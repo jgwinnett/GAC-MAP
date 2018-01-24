@@ -56,10 +56,10 @@ class mappingUnified():
             print("If you wish to continue, please type 'Yes', else the existing DataFrame will be opened instead.")
             yesNo = input('Confirm over-write:   ').lower()
 
-            if yesNo == "no":
-                self.openDF()
-            else:
+            if yesNo == "yes":
                 self.buildDF()
+            else:
+                self.openDF()
 
         else:
             self.buildDF()
@@ -135,20 +135,28 @@ class EPSRC_Mapping(mappingUnified):
         self.getTrawlKeywords()
         super(EPSRC_Mapping, self).__init__()
 
+    def buildDFRaw(self):
+        tempDF = pd.DataFrame(columns= self.columns, dtype='str')
+        self.EPSRC_DF_RAW = tempDF
+        self.closeEPSRC_DF_RAW(tempDF)
+
+    def buildDFRef(self):
+        tempDF = pd.DataFrame(columns= self.columns, dtype='str')
+        self.EPSRC_DF_REF = tempDF
+        self.closeEPSRC_DF_REF(tempDF)
+
     def checkDF_Raw_PreExists(self):
 
         """ Autonomous checking whether the EPSRC Raw DF exists and loads it, if not creates it
             For now it's assumed that you don't want the ability to over-write / re-create the dataframe.
-            This is probably short sighted.
+            This is probably short sighted (Surprise, it was!)
         """
 
 
         if os.path.isfile(self.EPSRC_DF_RAW_PATH):
             self.EPSRC_DF_RAW = pd.read_pickle(self.EPSRC_DF_RAW_PATH)
         else:
-            tempDF = pd.DataFrame(columns= self.columns, dtype='str')
-            self.EPSRC_DF_RAW = tempDF
-            self.closeEPSRC_DF_RAW(tempDF)
+            self.buildDFRaw()
 
     def closeEPSRC_DF_RAW(self, df):
         df.to_pickle(self.EPSRC_DF_RAW_PATH)
@@ -165,9 +173,7 @@ class EPSRC_Mapping(mappingUnified):
         if os.path.isfile(self.EPSRC_DF_REF_PATH):
             self.EPSRC_DF_REF = pd.read_pickle(self.EPSRC_DF_REF_PATH)
         else:
-            tempDF = pd.DataFrame(columns= self.columns, dtype='str')
-            self.EPSRC_DF_REF = tempDF
-            self.closeEPSRC_DF_REF(tempDF)
+            self.buildDFRef()
 
     def closeEPSRC_DF_REF(self, df):
         df.to_pickle(self.EPSRC_DF_REF_PATH)
@@ -267,9 +273,9 @@ class EPSRC_Mapping(mappingUnified):
                 ProjID = None
                 ProjTitle = None
                 Abs = None
-                leadOrgID = []
-                leadOrgName = []
-                DepName = []
+                leadOrgID = None
+                leadOrgName = None
+                DepName = None
                 POrgID = []
                 POrgName = []
                 PPID = []
@@ -287,7 +293,7 @@ class EPSRC_Mapping(mappingUnified):
                     ProjTitle = str(queryData['project'][ind]['title'])
                     Abs = queryData['project'][ind]['abstractText'] #updates abstractText
                     try:
-                        DepName.append(queryData['project'][ind]['leadOrganisationDepartment']) #updates department (if recorded)
+                        DepName = queryData['project'][ind]['leadOrganisationDepartment'] #updates department (if recorded)
                     except KeyError:
                         noSuchData()
                         DepName = None
@@ -303,8 +309,8 @@ class EPSRC_Mapping(mappingUnified):
 
                         if linkType == 'LEAD_ORG':     # Lead Org info
                             leadOrgTuple = caseLeadOrg(link,ind)
-                            leadOrgID.append(leadOrgTuple[0])
-                            leadOrgName.append(leadOrgTuple[1])
+                            leadOrgID = leadOrgTuple[0]
+                            leadOrgName = leadOrgTuple[1]
 
                         elif linkType == 'PARTICIPANT_ORG': # particiipant org info
                             partOrgTuple = caseP_ORG(link,ind)
@@ -452,6 +458,9 @@ class EPSRC_Mapping(mappingUnified):
         subDF['projSource'] = 'EPSRC'
         subDF = subDF.reset_index()
         subDF['collab'] = subDF[['Participant Org Name', 'Project Partner Name']].apply(lambda x: x[0] + x[1], axis = 1).values
+
+        for col in subDF:
+            subDF[col] = subDF[col].apply(lambda x: x if x else '')
         subDF.drop(columns=['Participant Org Name','Project Partner Name'], inplace=True)
         subDF = subDF[['Project Title','Abstract','Lead Org Name','collab', 'Funding Value','Searched Term','projSource']]
 
