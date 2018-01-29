@@ -21,6 +21,12 @@ def updateMapping():
     mapBot.datarefine()
     mapBot.unifyEPSRC()
 
+def classifyResults():
+
+    mapBot = map.mappingUnified()
+    mapBot.DFClassiCheck()
+    mapBot.pickleDeleter(self.unifiedDFPath)
+
 def exportUnified():
 
     mapBot = map.mappingUnified()
@@ -28,6 +34,7 @@ def exportUnified():
     mapBot.exportDF_CSV()
     mapBot.exportDF_excel()
 
-
+# updateMapping()#
 firstRun()
-exportUnified()
+# exportUnified()
+# classifyResults()

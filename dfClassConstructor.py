@@ -23,16 +23,24 @@ class mappingUnified():
         self.projFunding = None
         self.projGrouping = None
         self.projSource = None
-        self.unifiedDF= None
+        self.unifiedDF = None
+        self.classifiedDF= None
         self.searchTerms = None
         self.Response = None
+        self.classiDFExists = False
 
-        self.dfMainPath = "Pickles/unifiedDF.pickle"
+        self.dfUnifiedPath = "Pickles/unifiedDF.pickle"
+        self.dfClassiPath = "Pickles/classifiedDF.pickle"
+        self.excelImportPath = "Excel/classifiedProjects.xlsx"
+        self.csvImportPath = "CSV/classifiedProjects.xlsx"
         self.excelExportPath = "Excel/unifiedProjects.xlsx"
         self.csvExportPath = "CSV/unifiedProjects.csv"
-        self.Columns = ["projName", "projDesc", "projLead", "projCollab", "projFunding", "projGrouping", "projSource" ]
+
+        self.Columns = ["projName", "projDesc", "projLead", "projCollab", "projFunding", "projGrouping", "projSource", "projApplic" ]
 
         self.getTrawlKeywords()
+        self.DFClassiFlagCheck()
+
 
     def buildDF(self):
 
@@ -40,18 +48,27 @@ class mappingUnified():
 
         df = pd.DataFrame(columns= self.Columns, dtype='str')
         self.checkFolder('Pickles')
-        df.to_pickle(self.dfMainPath)
+        df.to_pickle(self.dfUnifiedPath)
+        try:
+            pickleDeleter("Pickles/EPSRC_raw.pickle")
+        except:
+            KeyError
+        try:
+            pickleDeleter("Pickles/EPSRC_refined.pickle")
+        except:
+            KeyError
         print("New DataFrame created and pickled!")
         self.unifiedDF= df
+
+    def pickleDeleter(self, picklePath):
+        os.remove(picklePath)
 
     def buildDFSafe(self):
 
         """Check if DF exists, if not build an empty DataFrame with appropriate columns and pickle it"""
 
-
-
         # check if a pickle file with name unifiedDF.pickle is an existing file
-        if os.path.isfile(self.dfMainPath):
+        if os.path.isfile(self.dfUnifiedPath):
             print("A unified DataFrame already exists for this project. Creating a new DataFrame will result in all previously stored data being lost")
             print("If you wish to continue, please type 'Yes', else the existing DataFrame will be opened instead.")
             yesNo = input('Confirm over-write:   ').lower()
@@ -63,6 +80,58 @@ class mappingUnified():
 
         else:
             self.buildDF()
+
+    def buildDFClassi(self):
+
+        ### TBI - what if a user previously used excel then this time used CSV?
+
+        if os.path.exists(self.excelImportPath):
+            self.classifiedDF = pd.read_excel(self.excelImportPath)
+            self.DFClassiClose()
+            print("Excel sheet imported")
+        elif os.path.exists(self.csvImportPath):
+            self.classifiedDF = pd.read_csv(self.csvImportPath)
+            self.DFClassiClose()
+        else:
+            print("No classified CSV or Excel file found - terminating program.")
+            quit()
+
+    def DFClassiCheck(self):
+
+        if not os.path.exists(self.dfClassiPath):
+            self.buildDFClassi()
+        else:
+            self.classifiedDF = pd.read_pickle(self.dfClassiPath)
+            self.classiDFUpdate()
+
+    def DFClassiFlagCheck(self):
+
+        if os.path.exists(self.dfClassiPath):
+            self.classiDFExists = True
+            self.classifiedDF = pd.read_pickle(self.dfClassiPath)
+
+    def classiDFUpdate(self):
+
+        if os.path.exists(excelImportPath):
+            print("Excel sheet imported")
+            tempDF = pd.read_excel(excelImportPath)
+
+        elif os.path.exists(csvImportPath):
+            tempDF = pd.read_csv(csvImportPath)
+        else:
+            print("No classified CSV or Excel file found - terminating program.")
+            quit()
+
+
+        self.classifiedDF = self.classifiedDF.append(tempDF)
+        self.DFClassiClose()
+
+    def DFClassiClose(self):
+
+        """Pickles the open unified DataFrame """
+        self.classifiedDF.to_pickle(self.dfClassiPath)
+        print('Classified DataFrame successfully pickled!')
+
 
     def checkFolder (self,folder):
 
@@ -77,13 +146,13 @@ class mappingUnified():
         """ Open the existing unified DataFrame pickle and return it """
 
         self.checkFolder('Pickles')
-        df = pd.read_pickle(self.dfMainPath)
+        df = pd.read_pickle(self.dfUnifiedPath)
         self.unifiedDF= df
 
     def closeDF_UNIFIED(self):
 
         """Pickles the open unified DataFrame """
-        self.unifiedDF.to_pickle(self.dfMainPath)
+        self.unifiedDF.to_pickle(self.dfUnifiedPath)
         print('Unified DataFrame successfully pickled!')
 
     def exportDF_CSV(self):
@@ -267,7 +336,7 @@ class EPSRC_Mapping(mappingUnified):
             # = ea.CallAPI(queryURL)            # parses the data into JSON format
 
             numProjects = len(queryData['project'])
-
+            print(str(numProjects) + " projects returned from EPSRC")
             for ind in range(numProjects):
 
                 ProjID = None
@@ -287,8 +356,14 @@ class EPSRC_Mapping(mappingUnified):
                 searchedTerm = terms
                 # gather info not found in links
                 ProjID = queryData['project'][ind]['id']
+                ProjTitle = str(queryData['project'][ind]['title'])
 
-                if (ProjID in self.EPSRC_DF_RAW.iloc[:,[0]].values) == False:
+                if(
+                (self.classiDFExists == True
+                and ProjTitle not in self.classifiedDF['projName'].values
+                and ProjID not in self.EPSRC_DF_RAW.iloc[:,[0]].values)
+                or self.classiDFExists == False
+                and ProjID not in self.EPSRC_DF_RAW.iloc[:,[0]].values):
 
                     ProjTitle = str(queryData['project'][ind]['title'])
                     Abs = queryData['project'][ind]['abstractText'] #updates abstractText
@@ -456,13 +531,14 @@ class EPSRC_Mapping(mappingUnified):
 
         subDF = self.EPSRC_DF_REF[['Project Title','Abstract','Lead Org Name','Participant Org Name','Project Partner Name', 'Funding Value','Searched Term']]
         subDF['projSource'] = 'EPSRC'
+        subDF['projApplic'] = ''
         subDF = subDF.reset_index()
         subDF['collab'] = subDF[['Participant Org Name', 'Project Partner Name']].apply(lambda x: x[0] + x[1], axis = 1).values
 
         for col in subDF:
             subDF[col] = subDF[col].apply(lambda x: x if x else '')
         subDF.drop(columns=['Participant Org Name','Project Partner Name'], inplace=True)
-        subDF = subDF[['Project Title','Abstract','Lead Org Name','collab', 'Funding Value','Searched Term','projSource']]
+        subDF = subDF[['Project Title','Abstract','Lead Org Name','collab', 'Funding Value','Searched Term','projSource', 'projApplic']]
 
         subDF.columns = range(subDF.shape[1])
         self.unifiedDF.columns = range(self.unifiedDF.shape[1])
@@ -626,7 +702,7 @@ class CORDIS_Mapping(mappingUnified):
                 except:
                     KeyError
 
-        dfSearchResult.drop_duplicates(subset="title",inplace=True)
+        dfSearchResult.drop_duplicates(subset="title",inplace=True, keep='first')
         self.unifyCORDIS(dfSearchResult)
 
 
@@ -638,7 +714,8 @@ class CORDIS_Mapping(mappingUnified):
         subDF = df[['title','objective','coordinator','participants','totalCost', 'searchedTerm']]
         subDF['participants'] = subDF['participants'].apply(lambda x: x.split(';'))
         subDF.loc[:,'projSource'] = 'CORDIS'
-        subDF = subDF[['title','objective','coordinator','participants','totalCost', 'searchedTerm','projSource']]
+        subDF.loc[:,'projApplic'] = ''
+        subDF = subDF[['title','objective','coordinator','participants','totalCost', 'searchedTerm','projSource', 'projApplic']]
         subDF.columns = range(subDF.shape[1])
         self.unifiedDF.columns = range(self.unifiedDF.shape[1])
         self.unifiedDF = self.unifiedDF.append(subDF, ignore_index=True)
