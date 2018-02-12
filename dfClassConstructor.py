@@ -195,7 +195,7 @@ class GTR_Mapping(mappingUnified):
 
 
     def __init__(self):
-        self.columns = ["Project ID", "Project Title", "Abstract","Lead Org ID","Lead Org Name", "Department Name", "Participant Org ID", "Participant Org Name","Project Partner ID","Project Partner Name", "Grant Category","Funding Value","Funding Start Date", "Funding End Date", "Searched Term"]
+        self.columns = ["Project ID", "Project Title", "Abstract","Lead Org ID","Lead Org Name", "Department Name", "Participant Org ID", "Participant Org Name","Project Partner ID","Project Partner Name", "Principle Investigator", "Grant Category","Funding Value","Funding Start Date", "Funding End Date", "Searched Term"]
         self.GTR_DF_RAW = None
         self.GTR_DF_REF = None
 
@@ -304,6 +304,14 @@ class GTR_Mapping(mappingUnified):
             P_OrgID = P_Org['id']  #betcha this wont work either
             return P_OrgID, P_OrgName
 
+        def casePI_PER(linkNum, indNum):
+            url = queryData['project'][indNum]['links']['link'][linkNum]['href']
+            PI_PER = ea.explicitPostRequest(url)
+            PI_PER_First = PI_PER['firstName']
+            PI_PER_Last = PI_PER['surname']
+            PI_PER = PI_PER_First + " " + PI_PER_Last
+            return PI_PER
+
         newCount = 0
 
         self.checkDF_Raw_PreExists()
@@ -349,6 +357,7 @@ class GTR_Mapping(mappingUnified):
                 POrgName = []
                 PPID = []
                 PPName = []
+                PI_PER = None
                 grantCat = None
                 fundValue = None
                 fundStart = None
@@ -409,7 +418,10 @@ class GTR_Mapping(mappingUnified):
                             fundStart = fundTuple[1]
                             fundEnd = fundTuple[2]
 
-                    series = pd.Series([ProjID, str(ProjTitle), Abs, leadOrgID, leadOrgName, DepName, POrgID, POrgName, PPID, PPName, grantCat, fundValue, fundStart, fundEnd, searchedTerm])
+                        elif linkType == 'PI_PER':
+                            PI_PER = casePI_PER(link,ind)
+
+                    series = pd.Series([ProjID, str(ProjTitle), Abs, leadOrgID, leadOrgName, DepName, POrgID, POrgName, PPID, PPName, PI_PER,grantCat, fundValue, fundStart, fundEnd, searchedTerm])
 
                     self.GTR_DF_RAW = self.GTR_DF_RAW.append(series, ignore_index=True)
                     newCount = newCount + 1
