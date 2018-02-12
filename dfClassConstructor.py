@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
-import EPSRC_API_access as ea
+import GTR_API_access as ea
 import datetime
 import os.path
 
-"""This module allows users to identify projects that are relevant to them from two sources - EPSRC's 'Gateway To Research' and CORDIS' Horizon 2020 Projects.
+"""This module allows users to identify projects that are relevant to them from two sources - GTR's 'Gateway To Research' and CORDIS' Horizon 2020 Projects.
     The user must idenfy applicable keywords and storethem in 'Trawl Keywords.txt'.
     Once done they may run one of the basic recipes in Mapping_Recipes to receive a unified list of applicable projects from both sources.
     These are exportable to both .CSV and .xlsx. If new keywords are desired they need only to be added and the list will be updated.
@@ -32,7 +32,7 @@ class mappingUnified():
         self.dfUnifiedPath = "Pickles/unifiedDF.pickle"
         self.dfClassiPath = "Pickles/classifiedDF.pickle"
         self.excelImportPath = "Excel/classifiedProjects.xlsx"
-        self.csvImportPath = "CSV/classifiedProjects.xlsx"
+        self.csvImportPath = "CSV/classifiedProjects.csv"
         self.excelExportPath = "Excel/unifiedProjects.xlsx"
         self.csvExportPath = "CSV/unifiedProjects.csv"
 
@@ -50,11 +50,11 @@ class mappingUnified():
         self.checkFolder('Pickles')
         df.to_pickle(self.dfUnifiedPath)
         try:
-            pickleDeleter("Pickles/EPSRC_raw.pickle")
+            pickleDeleter("Pickles/GTR_raw.pickle")
         except:
             KeyError
         try:
-            pickleDeleter("Pickles/EPSRC_refined.pickle")
+            pickleDeleter("Pickles/GTR_refined.pickle")
         except:
             KeyError
         print("New DataFrame created and pickled!")
@@ -114,10 +114,10 @@ class mappingUnified():
 
         if os.path.exists(excelImportPath):
             print("Excel sheet imported")
-            tempDF = pd.read_excel(excelImportPath)
+            tempDF = pd.read_excel(self.excelImportPath)
 
         elif os.path.exists(csvImportPath):
-            tempDF = pd.read_csv(csvImportPath)
+            tempDF = pd.read_csv(self.csvImportPath)
         else:
             print("No classified CSV or Excel file found - terminating program.")
             quit()
@@ -190,68 +190,68 @@ class mappingUnified():
         self.unifiedDF.dropna(subset=['projName'], inplace=True)
         self.closeDF_UNIFIED()
 
-class EPSRC_Mapping(mappingUnified):
+class GTR_Mapping(mappingUnified):
 
 
 
     def __init__(self):
         self.columns = ["Project ID", "Project Title", "Abstract","Lead Org ID","Lead Org Name", "Department Name", "Participant Org ID", "Participant Org Name","Project Partner ID","Project Partner Name", "Grant Category","Funding Value","Funding Start Date", "Funding End Date", "Searched Term"]
-        self.EPSRC_DF_RAW = None
-        self.EPSRC_DF_REF = None
+        self.GTR_DF_RAW = None
+        self.GTR_DF_REF = None
 
-        self.EPSRC_DF_RAW_PATH = "Pickles/EPSRC_raw.pickle"
-        self.EPSRC_DF_REF_PATH = "Pickles/EPSRC_refined.pickle"
+        self.GTR_DF_RAW_PATH = "Pickles/GTR_raw.pickle"
+        self.GTR_DF_REF_PATH = "Pickles/GTR_refined.pickle"
         self.getTrawlKeywords()
-        super(EPSRC_Mapping, self).__init__()
+        super(GTR_Mapping, self).__init__()
 
     def buildDFRaw(self):
         tempDF = pd.DataFrame(columns= self.columns, dtype='str')
-        self.EPSRC_DF_RAW = tempDF
-        self.closeEPSRC_DF_RAW(tempDF)
+        self.GTR_DF_RAW = tempDF
+        self.closeGTR_DF_RAW(tempDF)
 
     def buildDFRef(self):
         tempDF = pd.DataFrame(columns= self.columns, dtype='str')
-        self.EPSRC_DF_REF = tempDF
-        self.closeEPSRC_DF_REF(tempDF)
+        self.GTR_DF_REF = tempDF
+        self.closeGTR_DF_REF(tempDF)
 
     def checkDF_Raw_PreExists(self):
 
-        """ Autonomous checking whether the EPSRC Raw DF exists and loads it, if not creates it
+        """ Autonomous checking whether the GTR Raw DF exists and loads it, if not creates it
             For now it's assumed that you don't want the ability to over-write / re-create the dataframe.
             This is probably short sighted (Surprise, it was!)
         """
 
 
-        if os.path.isfile(self.EPSRC_DF_RAW_PATH):
-            self.EPSRC_DF_RAW = pd.read_pickle(self.EPSRC_DF_RAW_PATH)
+        if os.path.isfile(self.GTR_DF_RAW_PATH):
+            self.GTR_DF_RAW = pd.read_pickle(self.GTR_DF_RAW_PATH)
         else:
             self.buildDFRaw()
 
-    def closeEPSRC_DF_RAW(self, df):
-        df.to_pickle(self.EPSRC_DF_RAW_PATH)
+    def closeGTR_DF_RAW(self, df):
+        df.to_pickle(self.GTR_DF_RAW_PATH)
         print('Raw Dataframe successfully pickled!')
 
     def checkDF_REF_PreExists(self):
 
-        """ Autonomous checking whether the EPSRC Refined DF exists and loads it, if not creates it
+        """ Autonomous checking whether the GTR Refined DF exists and loads it, if not creates it
             For now it's assumed that you don't want the ability to over-write / re-create the dataframe.
             This is probably short sighted.
         """
 
 
-        if os.path.isfile(self.EPSRC_DF_REF_PATH):
-            self.EPSRC_DF_REF = pd.read_pickle(self.EPSRC_DF_REF_PATH)
+        if os.path.isfile(self.GTR_DF_REF_PATH):
+            self.GTR_DF_REF = pd.read_pickle(self.GTR_DF_REF_PATH)
         else:
             self.buildDFRef()
 
-    def closeEPSRC_DF_REF(self, df):
-        df.to_pickle(self.EPSRC_DF_REF_PATH)
+    def closeGTR_DF_REF(self, df):
+        df.to_pickle(self.GTR_DF_REF_PATH)
         print('Refined Dataframe successfully pickled!')
 
     def goSearch(self):
 
-        """ This is the head function for requesting and storing data from the EPSRC gateway.
-            Data is stored in its 'raw' form - the way EPSRC stores its data means that full details of projects are often spread around multiple responses.
+        """ This is the head function for requesting and storing data from the GTR gateway.
+            Data is stored in its 'raw' form - the way GTR stores its data means that full details of projects are often spread around multiple responses.
             Duplicates must be determined only by the Project ID, any attempts to drop duplicates on other values will end in lost data
         """
 
@@ -308,7 +308,7 @@ class EPSRC_Mapping(mappingUnified):
 
         self.checkDF_Raw_PreExists()
         # this is a workaround to allow the duplicate checking to function - you can't use column names with pandas iloc
-        self.EPSRC_DF_RAW.columns = range(self.EPSRC_DF_RAW.shape[1])
+        self.GTR_DF_RAW.columns = range(self.GTR_DF_RAW.shape[1])
 
         self.response = ea.getInput()
 
@@ -327,7 +327,7 @@ class EPSRC_Mapping(mappingUnified):
 
         for terms in self.searchTerms:
 
-            API = ea.EPSRC_API(terms, self.response)
+            API = ea.GTR_API(terms, self.response)
             API.inputHandler()
             API.URLConstructor()
             queryData = API.PostRequest()
@@ -336,7 +336,7 @@ class EPSRC_Mapping(mappingUnified):
             # = ea.CallAPI(queryURL)            # parses the data into JSON format
 
             numProjects = len(queryData['project'])
-            print(str(numProjects) + " projects returned from EPSRC")
+            print(str(numProjects) + " projects returned from GTR")
             for ind in range(numProjects):
 
                 ProjID = None
@@ -361,9 +361,9 @@ class EPSRC_Mapping(mappingUnified):
                 if(
                 (self.classiDFExists == True
                 and ProjTitle not in self.classifiedDF['projName'].values
-                and ProjID not in self.EPSRC_DF_RAW.iloc[:,[0]].values)
+                and ProjID not in self.GTR_DF_RAW.iloc[:,[0]].values)
                 or self.classiDFExists == False
-                and ProjID not in self.EPSRC_DF_RAW.iloc[:,[0]].values):
+                and ProjID not in self.GTR_DF_RAW.iloc[:,[0]].values):
 
                     ProjTitle = str(queryData['project'][ind]['title'])
                     Abs = queryData['project'][ind]['abstractText'] #updates abstractText
@@ -411,18 +411,18 @@ class EPSRC_Mapping(mappingUnified):
 
                     series = pd.Series([ProjID, str(ProjTitle), Abs, leadOrgID, leadOrgName, DepName, POrgID, POrgName, PPID, PPName, grantCat, fundValue, fundStart, fundEnd, searchedTerm])
 
-                    self.EPSRC_DF_RAW = self.EPSRC_DF_RAW.append(series, ignore_index=True)
+                    self.GTR_DF_RAW = self.GTR_DF_RAW.append(series, ignore_index=True)
                     newCount = newCount + 1
                 else:
                     print('Duplicate entry found... skipping')
 
         print(str(newCount) + " new projects were added.")
-        self.EPSRC_DF_RAW.columns = self.columns
-        self.closeEPSRC_DF_RAW(self.EPSRC_DF_RAW)
+        self.GTR_DF_RAW.columns = self.columns
+        self.closeGTR_DF_RAW(self.GTR_DF_RAW)
 
     def datarefine(self):
 
-        """ EPSRC stores the same project multiple times, depending on who is claiming to be the lead / who is receiving funding.
+        """ GTR stores the same project multiple times, depending on who is claiming to be the lead / who is receiving funding.
             This means that the data needs to be intelligently joined, avoiding duplicate values and resulting in a single row descring all facets of a project.
 
             We do this by using pandas groupby function to cluster projects which share the same title.
@@ -433,8 +433,8 @@ class EPSRC_Mapping(mappingUnified):
         self.checkDF_Raw_PreExists()
         self.checkDF_REF_PreExists()
 
-        self.EPSRC_DF_RAW.set_index('Project ID', inplace = True)
-        df = self.EPSRC_DF_RAW[~self.EPSRC_DF_RAW.index.duplicated(keep='first')]
+        self.GTR_DF_RAW.set_index('Project ID', inplace = True)
+        df = self.GTR_DF_RAW[~self.GTR_DF_RAW.index.duplicated(keep='first')]
 
         groupedDF = df.groupby('Project Title').filter(lambda x: len(x) > 1)
 
@@ -517,20 +517,20 @@ class EPSRC_Mapping(mappingUnified):
 
             df = df.append(tempDF, ignore_index = True)
 
-        self.EPSRC_DF_REF = df
-        self.closeEPSRC_DF_REF(self.EPSRC_DF_REF)
+        self.GTR_DF_REF = df
+        self.closeGTR_DF_REF(self.GTR_DF_REF)
 
-    def unifyEPSRC(self):
+    def unifyGTR(self):
 
-        """ Transports the EPSRC data into the unified Dataframe.
-            Have to undertake a bit of data-wangling to make the data compliant - EPSRC distinguishes between inter-institution relationships while the unifiedDF only cares about connections generally
+        """ Transports the GTR data into the unified Dataframe.
+            Have to undertake a bit of data-wangling to make the data compliant - GTR distinguishes between inter-institution relationships while the unifiedDF only cares about connections generally
         """
 
         self.openDF()
         self.checkDF_REF_PreExists()
 
-        subDF = self.EPSRC_DF_REF[['Project Title','Abstract','Lead Org Name','Participant Org Name','Project Partner Name', 'Funding Value','Searched Term']]
-        subDF['projSource'] = 'EPSRC'
+        subDF = self.GTR_DF_REF[['Project Title','Abstract','Lead Org Name','Participant Org Name','Project Partner Name', 'Funding Value','Searched Term']]
+        subDF['projSource'] = 'GTR'
         subDF['projApplic'] = ''
         subDF = subDF.reset_index()
         subDF['collab'] = subDF[['Participant Org Name', 'Project Partner Name']].apply(lambda x: x[0] + x[1], axis = 1).values

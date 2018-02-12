@@ -6,20 +6,20 @@ def firstRun():
     mapBot.buildDFSafe()
     mapBot.getCSV()
     mapBot.goSearch()
-    mapBot = map.EPSRC_Mapping()
+    mapBot = map.GTR_Mapping()
     mapBot.goSearch()
     mapBot.datarefine()
-    mapBot.unifyEPSRC()
+    mapBot.unifyGTR()
 
 def updateMapping():
 
     mapBot = map.CORDIS_Mapping()
     mapBot.getCSV()
     mapBot.goSearch()
-    mapBot = map.EPSRC_Mapping()
+    mapBot = map.GTR_Mapping()
     mapBot.goSearch()
     mapBot.datarefine()
-    mapBot.unifyEPSRC()
+    mapBot.unifyGTR()
 
 def classifyResults():
 
