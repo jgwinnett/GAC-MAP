@@ -11,9 +11,10 @@ Welcome to GAC-MAP documentation!
    :caption: Contents:
 
    Project
+   Install
    Cook-Book
    Mappers
-   EPSRC_API
+   GTR_API
 
 Indices and tables
 ==================

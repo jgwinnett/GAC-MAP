@@ -38,9 +38,3 @@ def exportUnified():
 #firstRun()
 # exportUnified()
 # classifyResults()
-
-import pandas as pd
-
-df = pd.read_pickle('Pickles/GTR_raw.pickle')
-
-df.to_excel('blah.xlsx')

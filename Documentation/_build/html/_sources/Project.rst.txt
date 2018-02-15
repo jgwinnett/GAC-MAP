@@ -15,7 +15,7 @@ Intended use case
 The intended use of this tool is to enable a quick and easy way to 'map' UK activity in <target> research field. This provides immediately usable results and also preps the data for further analytics and visualization.
 
 However it can also just be used as an easier way to access data from the
-:doc:`GTR API <EPSRC_API>`
+:doc:`GTR_API <GTR_API>`
 or avoid having to search through CORDIS's
 `large .CSV file <https://data.europa.eu/euodp/data/dataset/cordisH2020projects/resource/010f269b-9ee3-45a0-afea-c43aa1ef61ac>`_
 manually.
@@ -97,15 +97,15 @@ CORDIS data is extracted from the full .CSV so all the data is available. The fo
 +----------------------+------------------------------------------------------------+
 | title                |     The project's Title                                    |
 +----------------------+------------------------------------------------------------+
-| startDate            |     The startDate of the H02020 funding                    |
+| startDate            |     The start Date of the H02020 funding                   |
 +----------------------+------------------------------------------------------------+
-| endDate              |     The endDate of the H02020 funding                      |
+| endDate              |     The end Date of the H02020 funding                     |
 +----------------------+------------------------------------------------------------+
 | projectUrl           |     The URL (web-access) of the project                    |
 +----------------------+------------------------------------------------------------+
 | objective            |     The Description of the project's goals.                |
 +----------------------+------------------------------------------------------------+
-| totalCost            |     TThe Total Value of spending on the project.           |
+| totalCost            |     The Total Value of spending on the project.            |
 +----------------------+------------------------------------------------------------+
 | coordinator          |     The Name of the lead organisation.                     |
 +----------------------+------------------------------------------------------------+
@@ -117,3 +117,10 @@ CORDIS data is extracted from the full .CSV so all the data is available. The fo
 +----------------------+------------------------------------------------------------+
 | subjects             |     The search term(s) that returned the given project     |
 +----------------------+------------------------------------------------------------+
+
+Licensing
+==========================
+
+This module is released under XYZ license.
+If you're using this outside of personal use please credit as below:
+Blah blah, something.

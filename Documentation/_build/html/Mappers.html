@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>CORDIS &amp; EPSRC Mapping &#8212; UK Academic Mapping 1 documentation</title>
+    <title>CORDIS &amp; GTR Mapping &#8212; UK Academic Mapping 1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="EPSRC API Access" href="EPSRC_API.html" />
+    <link rel="next" title="GTR API Access" href="GTR_API.html" />
     <link rel="prev" title="GAC-MAP Recipes" href="Cook-Book.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -40,11 +40,11 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="cordis-epsrc-mapping">
-<h1>CORDIS &amp; EPSRC Mapping<a class="headerlink" href="#cordis-epsrc-mapping" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="cordis-gtr-mapping">
+<h1>CORDIS &amp; GTR Mapping<a class="headerlink" href="#cordis-gtr-mapping" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="purpose">
 <h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
-<p>This module allows users to identify projects that are relevant to them from two sources - EPSRC’s ‘Gateway To Research’ and CORDIS’ Horizon 2020 Projects.
+<p>This module allows users to identify projects that are relevant to them from two sources - GTR’s ‘Gateway To Research’ and CORDIS’ Horizon 2020 Projects.
 The user must idenfy applicable keywords and storethem in ‘Trawl Keywords.txt’.
 Once done they may run one of the basic recipes in Mapping_Recipes to receive a unified list of applicable projects from both sources.
 These are exportable to both .CSV and .xlsx. If new keywords are desired they need only to be added and the list will be updated.</p>
@@ -55,7 +55,7 @@ These are exportable to both .CSV and .xlsx. If new keywords are desired they ne
 <h3>From this project:<a class="headerlink" href="#from-this-project" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
-<li>EPSRC_API_access</li>
+<li>GTR_API_access</li>
 </ul>
 </div></blockquote>
 </div>
@@ -75,11 +75,17 @@ These are exportable to both .CSV and .xlsx. If new keywords are desired they ne
 <h2>Module Classes and Methods<a class="headerlink" href="#module-classes-and-methods" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="mapping-unifier">
 <h3>Mapping Unifier<a class="headerlink" href="#mapping-unifier" title="Permalink to this headline">¶</a></h3>
-<p>This class is responsible for building the baseline dataframe of unified data. It is inherited by CORDIS_Mapping and EPSRC_Mapping</p>
+<p>This class is responsible for building the baseline dataframe of unified data. It is inherited by CORDIS_Mapping and GTR_Mapping</p>
 <dl class="class">
 <dt id="dfClassConstructor.mappingUnified">
 <em class="property">class </em><code class="descclassname">dfClassConstructor.</code><code class="descname">mappingUnified</code><a class="headerlink" href="#dfClassConstructor.mappingUnified" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
+<dt id="dfClassConstructor.mappingUnified.DFClassiClose">
+<code class="descname">DFClassiClose</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.mappingUnified.DFClassiClose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pickles the open unified DataFrame</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="dfClassConstructor.mappingUnified.buildDF">
 <code class="descname">buildDF</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.mappingUnified.buildDF" title="Permalink to this definition">¶</a></dt>
 <dd><p>Blind build a new DataFrame using appropriate columns, use buildDFSafe() to avoid accidental overwrites</p>
@@ -92,6 +98,12 @@ These are exportable to both .CSV and .xlsx. If new keywords are desired they ne
 </dd></dl>
 
 <dl class="method">
+<dt id="dfClassConstructor.mappingUnified.checkFolder">
+<code class="descname">checkFolder</code><span class="sig-paren">(</span><em>folder</em><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.mappingUnified.checkFolder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if requisite folder has been created. If not, create them</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="dfClassConstructor.mappingUnified.closeDF_UNIFIED">
 <code class="descname">closeDF_UNIFIED</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.mappingUnified.closeDF_UNIFIED" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pickles the open unified DataFrame</p>
@@ -100,7 +112,7 @@ These are exportable to both .CSV and .xlsx. If new keywords are desired they ne
 <dl class="method">
 <dt id="dfClassConstructor.mappingUnified.dropDuplicates">
 <code class="descname">dropDuplicates</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.mappingUnified.dropDuplicates" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks if a project is already in the unified dataframe and returns True or False</p>
+<dd><p>Checks if a project is already in the unified dataframe</p>
 </dd></dl>
 
 <dl class="method">
@@ -130,36 +142,36 @@ These are exportable to both .CSV and .xlsx. If new keywords are desired they ne
 </dd></dl>
 
 </div>
-<div class="section" id="epsrc-mapping">
-<h3>EPSRC Mapping<a class="headerlink" href="#epsrc-mapping" title="Permalink to this headline">¶</a></h3>
-<p>This class is responsible for the ingesting, refinement and transportation of information from the EPSRC gateway.</p>
-<p>The data is pulled by constructing request URLs (see <a class="reference internal" href="EPSRC_API.html"><span class="doc">API Access</span></a> for more details) and sending off WGET requests”</p>
+<div class="section" id="gtr-mapping">
+<h3>GTR Mapping<a class="headerlink" href="#gtr-mapping" title="Permalink to this headline">¶</a></h3>
+<p>This class is responsible for the ingesting, refinement and transportation of information from the GTR gateway.</p>
+<p>The data is pulled by constructing request URLs (see <a class="reference internal" href="GTR_API.html"><span class="doc">API Access</span></a> for more details) and sending off WGET requests”</p>
 <p>The responses are stored in a temporary dataframe which is preserved for future pass throughs.</p>
 <p>This ‘raw’ data is then refined / transformed to condense a project’s information into a single row and kill off duplicates.</p>
 <p>Refined data is then preserved and relevant parts pushed into the the unified dataframe.</p>
 <dl class="class">
-<dt id="dfClassConstructor.EPSRC_Mapping">
-<em class="property">class </em><code class="descclassname">dfClassConstructor.</code><code class="descname">EPSRC_Mapping</code><a class="headerlink" href="#dfClassConstructor.EPSRC_Mapping" title="Permalink to this definition">¶</a></dt>
+<dt id="dfClassConstructor.GTR_Mapping">
+<em class="property">class </em><code class="descclassname">dfClassConstructor.</code><code class="descname">GTR_Mapping</code><a class="headerlink" href="#dfClassConstructor.GTR_Mapping" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
-<dt id="dfClassConstructor.EPSRC_Mapping.checkDF_REF_PreExists">
-<code class="descname">checkDF_REF_PreExists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.EPSRC_Mapping.checkDF_REF_PreExists" title="Permalink to this definition">¶</a></dt>
-<dd><p>Autonomous checking whether the EPSRC Refined DF exists and loads it, if not creates it
+<dt id="dfClassConstructor.GTR_Mapping.checkDF_REF_PreExists">
+<code class="descname">checkDF_REF_PreExists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.GTR_Mapping.checkDF_REF_PreExists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Autonomous checking whether the GTR Refined DF exists and loads it, if not creates it
 For now it’s assumed that you don’t want the ability to over-write / re-create the dataframe.
 This is probably short sighted.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="dfClassConstructor.EPSRC_Mapping.checkDF_Raw_PreExists">
-<code class="descname">checkDF_Raw_PreExists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.EPSRC_Mapping.checkDF_Raw_PreExists" title="Permalink to this definition">¶</a></dt>
-<dd><p>Autonomous checking whether the EPSRC Raw DF exists and loads it, if not creates it
+<dt id="dfClassConstructor.GTR_Mapping.checkDF_Raw_PreExists">
+<code class="descname">checkDF_Raw_PreExists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.GTR_Mapping.checkDF_Raw_PreExists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Autonomous checking whether the GTR Raw DF exists and loads it, if not creates it
 For now it’s assumed that you don’t want the ability to over-write / re-create the dataframe.
-This is probably short sighted.</p>
+This is probably short sighted (Surprise, it was!)</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="dfClassConstructor.EPSRC_Mapping.datarefine">
-<code class="descname">datarefine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.EPSRC_Mapping.datarefine" title="Permalink to this definition">¶</a></dt>
-<dd><p>EPSRC stores the same project multiple times, depending on who is claiming to be the lead / who is receiving funding.
+<dt id="dfClassConstructor.GTR_Mapping.datarefine">
+<code class="descname">datarefine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.GTR_Mapping.datarefine" title="Permalink to this definition">¶</a></dt>
+<dd><p>GTR stores the same project multiple times, depending on who is claiming to be the lead / who is receiving funding.
 This means that the data needs to be intelligently joined, avoiding duplicate values and resulting in a single row descring all facets of a project.</p>
 <p>We do this by using pandas groupby function to cluster projects which share the same title.
 We then identify a unique set of values from all of the projects, convert to a list and store in a dataframe series.
@@ -167,18 +179,18 @@ The series are then appended back onto the main dataframe (so that we have the �
 </dd></dl>
 
 <dl class="method">
-<dt id="dfClassConstructor.EPSRC_Mapping.goSearch">
-<code class="descname">goSearch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.EPSRC_Mapping.goSearch" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is the head function for requesting and storing data from the EPSRC gateway.
-Data is stored in its ‘raw’ form - the way EPSRC stores its data means that full details of projects are often spread around multiple responses.
+<dt id="dfClassConstructor.GTR_Mapping.goSearch">
+<code class="descname">goSearch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.GTR_Mapping.goSearch" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the head function for requesting and storing data from the GTR gateway.
+Data is stored in its ‘raw’ form - the way GTR stores its data means that full details of projects are often spread around multiple responses.
 Duplicates must be determined only by the Project ID, any attempts to drop duplicates on other values will end in lost data</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="dfClassConstructor.EPSRC_Mapping.unifyEPSRC">
-<code class="descname">unifyEPSRC</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.EPSRC_Mapping.unifyEPSRC" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transports the EPSRC data into the unified Dataframe.
-Have to undertake a bit of data-wangling to make the data compliant - EPSRC distinguishes between inter-institution relationships while the unifiedDF only cares about connections generally</p>
+<dt id="dfClassConstructor.GTR_Mapping.unifyGTR">
+<code class="descname">unifyGTR</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dfClassConstructor.GTR_Mapping.unifyGTR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transports the GTR data into the unified Dataframe.
+Have to undertake a bit of data-wangling to make the data compliant - GTR distinguishes between inter-institution relationships while the unifiedDF only cares about connections generally</p>
 </dd></dl>
 
 </dd></dl>
@@ -269,7 +281,7 @@ The unifier is automatically called, transporting the search results into the un
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="Cook-Book.html" title="previous chapter">GAC-MAP Recipes</a></li>
-      <li>Next: <a href="EPSRC_API.html" title="next chapter">EPSRC API Access</a></li>
+      <li>Next: <a href="GTR_API.html" title="next chapter">GTR API Access</a></li>
   </ul></li>
 </ul>
 </div>
