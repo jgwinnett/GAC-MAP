@@ -4,10 +4,13 @@ CORDIS & GTR Mapping
 Purpose
 ========
 
-This module allows users to identify projects that are relevant to them from two sources - GTR's 'Gateway To Research' and CORDIS' Horizon 2020 Projects.
-The user must idenfy applicable keywords and storethem in 'Trawl Keywords.txt'.
-Once done they may run one of the basic recipes in Mapping_Recipes to receive a unified list of applicable projects from both sources.
-These are exportable to both .CSV and .xlsx. If new keywords are desired they need only to be added and the list will be updated.
+This module allows users to identify projects from two sources: GTR's 'Gateway To Research' and CORDIS' Horizon 2020 Projects.
+The user must identify applicable keywords and store them in 'Trawl Keywords.txt'.
+Once done, they may run one of the basic recipes in 'Mapping_Recipes.py' to receive a unified list of applicable projects from both sources.
+These are exportable to both .CSV and .xlsx. 
+
+Updating the results is equally simple - add any new Keywords (if relevant) to the 'Trawl Keywords.txt' and run updateMapping.
+Any new results will be added to the original results file, ready for export.
 
 Dependencies
 =============

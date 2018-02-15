@@ -44,7 +44,7 @@
 <div class="section" id="purpose">
 <h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
 <p>This module is used to query the Gateway To Research (GTR) API. Queries are done by posting GET requests with specifically crafted URLs.
-As such there are two main elements: constructing the URL based on user input and then posting the request and processing the request.</p>
+As such there are two main elements: constructing the URL based on user input and posting/processing the request.</p>
 </div>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
@@ -149,15 +149,60 @@ This must be passed a complete GTR query URL and uses a hardcoded JSON header</p
 <div class="highlight-html"><div class="highlight"><pre><span></span>http://gtr.rcuk.ac.uk/gtr/api/projects?
 </pre></div>
 </div>
-<p>Then construct the rest of the URL based on your target values from the following list (these are additive):</p>
-<ul class="simple">
-<li>so = sort order - sort order = A for ascending, =D for descending</li>
-<li>q=searchterm - search term</li>
-<li>p=pageresult - page of result set, starting at 1</li>
-<li>s=size - size of page, between 10 and 100</li>
-<li>f=fields - search specific fields</li>
-<li>sf = sort fields - sort by a certain fields</li>
-</ul>
+<p>Then, based on your desired search results, append the relevant text to the URL.
+All query parameters are separated by an ampersand (&amp;). The order of terms in the URL does not appear to matter.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="5%" />
+<col width="34%" />
+<col width="48%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Query</th>
+<th class="head">URL</th>
+<th class="head">Valid Values</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Search Term</td>
+<td>q=</td>
+<td>Any String</td>
+<td>The Search Term you wish to find results related to</td>
+</tr>
+<tr class="row-odd"><td>Page Result</td>
+<td>p=</td>
+<td>Integer</td>
+<td>The page number of the search results returned</td>
+</tr>
+<tr class="row-even"><td>Size</td>
+<td>s=</td>
+<td>Integer between 10 and 100</td>
+<td>How many results to display, per page</td>
+</tr>
+<tr class="row-odd"><td>Fields</td>
+<td>f=</td>
+<td>See ‘Fields’ below</td>
+<td>What field(s) the Search Term should be queried against</td>
+</tr>
+<tr class="row-even"><td>Sort Fields</td>
+<td>sf=</td>
+<td>See ‘Fields’ below</td>
+<td>What field(s) the results should be sorted by.</td>
+</tr>
+<tr class="row-odd"><td>Sort Order</td>
+<td>so=</td>
+<td>‘A’ for ascending, ‘D’ for descending</td>
+<td>Whether results should be sorted in ascending or
+descending  order</td>
+</tr>
+</tbody>
+</table>
+<p>e.g. to state that the number of results per page should be 100 and you want the 2nd page you would type</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span>http://gtr.rcuk.ac.uk/gtr/api/projects?s=100&amp;p=2
+</pre></div>
+</div>
 <p>Fields are special in that you will have to dig into the GTR configs to find out what fields may be searched against.
 To do this navigate in your browser of choice to <a class="reference external" href="http://gtr.rcuk.ac.uk/gtr/api/configs">http://gtr.rcuk.ac.uk/gtr/api/configs</a>/&lt;resource&gt;  (be sure to add the ‘s’) e.g.</p>
 <div class="highlight-html"><div class="highlight"><pre><span></span>http://gtr.rcuk.ac.uk/gtr/api/configs/projects
@@ -170,8 +215,11 @@ To do this navigate in your browser of choice to <a class="reference external" h
 <li>pro.a - Project Abstract</li>
 <li>pro.orcidID - Project’s ORCID ID</li>
 </ul>
-<p>All query parameters are separated by an ampersand (&amp;). The order of terms in the URL does not appear to matter.</p>
-<p>Say, for example, you wanted to find:</p>
+<p>e.g. to search the ‘Project Title’ field you would use the following example:</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span>http://gtr.rcuk.ac.uk/gtr/api/projects?f=pro.t
+</pre></div>
+</div>
+<p>Putting it all together - example, you wanted to find:</p>
 <ul class="simple">
 <li><dl class="first docutils">
 <dt>Projects</dt>

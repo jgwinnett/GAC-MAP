@@ -13,6 +13,3 @@ In the terminal of your choice run:
   pip3 install -r requirements.txt --user
 
 This will install all the python module requirements needed by the code.
-
-Intended use case
-=======================

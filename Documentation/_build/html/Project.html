@@ -44,25 +44,26 @@
 <h1>GAC-MAP Overview<a class="headerlink" href="#gac-map-overview" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="project-description">
 <h2>Project Description<a class="headerlink" href="#project-description" title="Permalink to this headline">¶</a></h2>
-<p>GAC-MAP (GTR and CORDIS Mapping) is a project created to simplify the process of finding details about UK based academic projects in &lt;target&gt; field.</p>
-<p>This project progresses large batches of keywords against the GTR and CORDIS datasets and returns projects where these keywords are present.</p>
-<p>As GTR &amp; CORDIS store their data differently we also ‘unify’ the data so that we finish with a set of common data-points.</p>
+<p>GAC-MAP (GtR and CORDIS Mapping) is a project created to simplify the process of finding details about UK based academic projects in the &lt;target&gt; field.</p>
+<p>This project processes large batches of keywords against the GtR and CORDIS datasets and returns projects where these keywords are present.</p>
+<p>As GtR &amp; CORDIS store their data differently we also ‘unify’ the data so that we finish with a set of common data-points.</p>
 </div>
 <div class="section" id="intended-use-case">
 <h2>Intended use case<a class="headerlink" href="#intended-use-case" title="Permalink to this headline">¶</a></h2>
 <p>The intended use of this tool is to enable a quick and easy way to ‘map’ UK activity in &lt;target&gt; research field. This provides immediately usable results and also preps the data for further analytics and visualization.</p>
-<p>However it can also just be used as an easier way to access data from the
+<p>It can also just be used as an easier way to access data from the
 <a class="reference internal" href="GTR_API.html"><span class="doc">GTR_API</span></a>
-or avoid having to search through CORDIS’s
+or avoid having to search through CORDIS’
 <a class="reference external" href="https://data.europa.eu/euodp/data/dataset/cordisH2020projects/resource/010f269b-9ee3-45a0-afea-c43aa1ef61ac">large .CSV file</a>
 manually.</p>
 </div>
 <div class="section" id="what-data-is-currently-stored">
 <h2>What Data is currently stored?<a class="headerlink" href="#what-data-is-currently-stored" title="Permalink to this headline">¶</a></h2>
 <p>The following is a breakdown of what data is stored by default.</p>
+<p>Each data type (Unified, GtR, CORDIS) is stored in its own file but only Unified is used in further processing.</p>
 <div class="section" id="unified-data">
 <h3>Unified Data<a class="headerlink" href="#unified-data" title="Permalink to this headline">¶</a></h3>
-<p>Unified data refers to the commonly shared datapoints between the EPSRC and CORDIS sources.</p>
+<p>Unified data refers to the commonly shared datapoints between the GtR and CORDIS sources.</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="18%" />
@@ -75,29 +76,29 @@ manually.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>projName</td>
-<td>The name of the project</td>
+<td>The Name of the project</td>
 </tr>
 <tr class="row-odd"><td>projDesc</td>
-<td>The project’s description of the work being done.</td>
+<td>The Project’s Description of the work being done.</td>
 </tr>
 <tr class="row-even"><td>projLead</td>
-<td>The lead organisation of the project.</td>
+<td>The Lead Organisation of the project.</td>
 </tr>
 <tr class="row-odd"><td>projCollab</td>
-<td>The collaborators working on the project</td>
+<td>The Collaborators working on the project</td>
 </tr>
 <tr class="row-even"><td>projGrouping</td>
-<td>The search term(s) that returned the given project.</td>
+<td>The Search Term(s) that returned the given project.</td>
 </tr>
 <tr class="row-odd"><td>projSource</td>
-<td>Lists the data source point, EPSRC or CORDIS.</td>
+<td>Lists the data source point, GtR or CORDIS.</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="section" id="epsrc-data">
-<h3>EPSRC Data<a class="headerlink" href="#epsrc-data" title="Permalink to this headline">¶</a></h3>
-<p>The following data is stored from EPSRC queries:</p>
+<div class="section" id="gtr-data">
+<h3>GtR Data<a class="headerlink" href="#gtr-data" title="Permalink to this headline">¶</a></h3>
+<p>The following data is stored from GtR queries:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="27%" />
@@ -110,7 +111,7 @@ manually.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>Project ID</td>
-<td>The Project’s GTR ID</td>
+<td>The project’s GtR ID</td>
 </tr>
 <tr class="row-odd"><td>Project Title</td>
 <td>The project’s Title</td>
@@ -119,22 +120,22 @@ manually.</p>
 <td>The Description of the project</td>
 </tr>
 <tr class="row-odd"><td>Lead Org ID</td>
-<td>The GTR ID of the lead organisation</td>
+<td>The GtR ID of the Lead organisation</td>
 </tr>
 <tr class="row-even"><td>Lead Org Name</td>
-<td>The Name of the lead organisation</td>
+<td>The Name of the Lead organisation</td>
 </tr>
 <tr class="row-odd"><td>Department Name</td>
 <td>The Department Name (subset of the Lead Organisation)</td>
 </tr>
 <tr class="row-even"><td>Participant Org ID</td>
-<td>The GTR ID of a participant Organisation</td>
+<td>The GtR ID of a Participant Organisation</td>
 </tr>
 <tr class="row-odd"><td>Participant Org Name</td>
-<td>The Name of a participant Organisation.</td>
+<td>The Name of a Participant Organisation.</td>
 </tr>
 <tr class="row-even"><td>Project Partner ID</td>
-<td>The GTR ID of a Project Partner</td>
+<td>The GtR ID of a Project Partner</td>
 </tr>
 <tr class="row-odd"><td>Project Partner Name</td>
 <td>The Name of a Project Partner</td>
@@ -159,7 +160,7 @@ manually.</p>
 </div>
 <div class="section" id="cordis-data">
 <h3>CORDIS Data<a class="headerlink" href="#cordis-data" title="Permalink to this headline">¶</a></h3>
-<p>CORDIS data is extracted from the full .CSV so all the data is available. The following is an extract of the most useful datapoints.</p>
+<p>CORDIS data is extracted from the full .CSV so all the data is available. The following, most useful, datapoints are retained.</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="27%" />
@@ -172,19 +173,19 @@ manually.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>id</td>
-<td>The CORDIS ID of the project</td>
+<td>The CORDIS ID of the project.</td>
 </tr>
 <tr class="row-odd"><td>title</td>
-<td>The project’s Title</td>
+<td>The project’s Title.</td>
 </tr>
 <tr class="row-even"><td>startDate</td>
-<td>The start Date of the H02020 funding</td>
+<td>The start Date of the H2020 funding.</td>
 </tr>
 <tr class="row-odd"><td>endDate</td>
-<td>The end Date of the H02020 funding</td>
+<td>The end Date of the H2020 funding.</td>
 </tr>
 <tr class="row-even"><td>projectUrl</td>
-<td>The URL (web-access) of the project</td>
+<td>The URL (web-access) of the project.</td>
 </tr>
 <tr class="row-odd"><td>objective</td>
 <td>The Description of the project’s goals.</td>
@@ -193,19 +194,19 @@ manually.</p>
 <td>The Total Value of spending on the project.</td>
 </tr>
 <tr class="row-odd"><td>coordinator</td>
-<td>The Name of the lead organisation.</td>
+<td>The Name of the Lead Organisation.</td>
 </tr>
 <tr class="row-even"><td>coordinatorCountry</td>
-<td>The Country of the lead organisation</td>
+<td>The Country of the Lead Organisation.</td>
 </tr>
 <tr class="row-odd"><td>participants</td>
-<td>The Name(s) of Participant organisations</td>
+<td>The Name(s) of Participant Organisations.</td>
 </tr>
 <tr class="row-even"><td>participantCountries</td>
-<td>The Countries where Participant Organisations reside</td>
+<td>The Countries where Participant Organisations reside.</td>
 </tr>
 <tr class="row-odd"><td>subjects</td>
-<td>The search term(s) that returned the given project</td>
+<td>The search term(s) that returned the given project.</td>
 </tr>
 </tbody>
 </table>

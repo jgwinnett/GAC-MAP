@@ -5,7 +5,7 @@ Purpose
 ========
 
 This module is used to query the Gateway To Research (GTR) API. Queries are done by posting GET requests with specifically crafted URLs.
-As such there are two main elements: constructing the URL based on user input and then posting the request and processing the request.
+As such there are two main elements: constructing the URL based on user input and posting/processing the request.
 
 Dependencies
 =============
@@ -61,15 +61,31 @@ To submit queries you will need to pluralise the resource (add an "s") and end w
 
 	http://gtr.rcuk.ac.uk/gtr/api/projects?
 
-Then construct the rest of the URL based on your target values from the following list (these are additive):
+Then, based on your desired search results, append the relevant text to the URL.
+All query parameters are separated by an ampersand (&). The order of terms in the URL does not appear to matter.
 
++---------------+------+----------------------------------------+--------------------------------------------------------+
+| Query         |  URL |  Valid Values                          | Explanation                                            |
++===============+======+========================================+========================================================+
+| Search Term   |  q=  |  Any String                            | The Search Term you wish to find results related to    |
++---------------+------+----------------------------------------+--------------------------------------------------------+
+| Page Result   |  p=  |  Integer                               | The page number of the search results returned         |
++---------------+------+----------------------------------------+--------------------------------------------------------+
+| Size          |  s=  |  Integer between 10 and 100            | How many results to display, per page                  |
++---------------+------+----------------------------------------+--------------------------------------------------------+
+| Fields        |  f=  |  See 'Fields' below                    | What field(s) the Search Term should be queried against|
++---------------+------+----------------------------------------+--------------------------------------------------------+
+| Sort Fields   |  sf= |  See 'Fields' below                    | What field(s) the results should be sorted by.         |
++---------------+------+----------------------------------------+--------------------------------------------------------+
+| Sort Order    |  so= |  'A' for ascending, 'D' for descending | Whether results should be sorted in ascending or       |
+|               |      |                                        | descending  order                                      |
++---------------+------+----------------------------------------+--------------------------------------------------------+
 
-*  so = sort order - sort order = A for ascending, =D for descending
-*  q=searchterm - search term
-*  p=pageresult - page of result set, starting at 1
-*  s=size - size of page, between 10 and 100
-*  f=fields - search specific fields
-*  sf = sort fields - sort by a certain fields
+e.g. to state that the number of results per page should be 100 and you want the 2nd page you would type
+
+.. code-block:: html
+
+	http://gtr.rcuk.ac.uk/gtr/api/projects?s=100&p=2
 
 Fields are special in that you will have to dig into the GTR configs to find out what fields may be searched against.
 To do this navigate in your browser of choice to http://gtr.rcuk.ac.uk/gtr/api/configs/<resource>  (be sure to add the 's') e.g.
@@ -85,9 +101,13 @@ Tells you that the following fields are searchable:
 * pro.a - Project Abstract
 * pro.orcidID - Project's ORCID ID
 
-All query parameters are separated by an ampersand (&). The order of terms in the URL does not appear to matter.
+e.g. to search the 'Project Title' field you would use the following example:
 
-Say, for example, you wanted to find:
+.. code-block:: html
+
+	http://gtr.rcuk.ac.uk/gtr/api/projects?f=pro.t
+
+Putting it all together - example, you wanted to find:
 
 * Projects
 	* where 'fish' (q=fish)

@@ -4,19 +4,19 @@ GAC-MAP Overview
 Project Description
 =====================
 
-GAC-MAP (GTR and CORDIS Mapping) is a project created to simplify the process of finding details about UK based academic projects in <target> field.
+GAC-MAP (GtR and CORDIS Mapping) is a project created to simplify the process of finding details about UK based academic projects in the <target> field.
 
-This project progresses large batches of keywords against the GTR and CORDIS datasets and returns projects where these keywords are present.
+This project processes large batches of keywords against the GtR and CORDIS datasets and returns projects where these keywords are present.
 
-As GTR & CORDIS store their data differently we also 'unify' the data so that we finish with a set of common data-points.
+As GtR & CORDIS store their data differently we also 'unify' the data so that we finish with a set of common data-points.
 
 Intended use case
 =======================
 The intended use of this tool is to enable a quick and easy way to 'map' UK activity in <target> research field. This provides immediately usable results and also preps the data for further analytics and visualization.
 
-However it can also just be used as an easier way to access data from the
+It can also just be used as an easier way to access data from the
 :doc:`GTR_API <GTR_API>`
-or avoid having to search through CORDIS's
+or avoid having to search through CORDIS'
 `large .CSV file <https://data.europa.eu/euodp/data/dataset/cordisH2020projects/resource/010f269b-9ee3-45a0-afea-c43aa1ef61ac>`_
 manually.
 
@@ -26,51 +26,53 @@ What Data is currently stored?
 
 The following is a breakdown of what data is stored by default.
 
+Each data type (Unified, GtR, CORDIS) is stored in its own file but only Unified is used in further processing.
+
 Unified Data
 ----------------------------
 
-Unified data refers to the commonly shared datapoints between the EPSRC and CORDIS sources.
+Unified data refers to the commonly shared datapoints between the GtR and CORDIS sources.
 
 +-------------+------------------------------------------------------------+
 | Data Name   |     Data Description                                       |
 +=============+============================================================+
-| projName    |     The name of the project                                |
+| projName    |     The Name of the project                                |
 +-------------+------------------------------------------------------------+
-| projDesc    |     The project's description of the work being done.      |
+| projDesc    |     The Project's Description of the work being done.      |
 +-------------+------------------------------------------------------------+
-| projLead    |     The lead organisation of the project.                  |
+| projLead    |     The Lead Organisation of the project.                  |
 +-------------+------------------------------------------------------------+
-| projCollab  |     The collaborators working on the project               |
+| projCollab  |     The Collaborators working on the project               |
 +-------------+------------------------------------------------------------+
-| projGrouping|     The search term(s) that returned the given project.    |
+| projGrouping|     The Search Term(s) that returned the given project.    |
 +-------------+------------------------------------------------------------+
-| projSource  |     Lists the data source point, EPSRC or CORDIS.          |
+| projSource  |     Lists the data source point, GtR or CORDIS.            |
 +-------------+------------------------------------------------------------+
 
-EPSRC Data
+GtR Data
 ----------------------
-The following data is stored from EPSRC queries:
+The following data is stored from GtR queries:
 
 +----------------------+------------------------------------------------------------+
 | Data Name            |     Data Description                                       |
 +======================+============================================================+
-| Project ID           |     The Project's GTR ID                                   |
+| Project ID           |     The project's GtR ID                                   |
 +----------------------+------------------------------------------------------------+
 | Project Title        |     The project's Title                                    |
 +----------------------+------------------------------------------------------------+
 | Abstract             |     The Description of the project                         |
 +----------------------+------------------------------------------------------------+
-| Lead Org ID          |     The GTR ID of the lead organisation                    |
+| Lead Org ID          |     The GtR ID of the Lead organisation                    |
 +----------------------+------------------------------------------------------------+
-| Lead Org Name        |     The Name of the lead organisation                      |
+| Lead Org Name        |     The Name of the Lead organisation                      |
 +----------------------+------------------------------------------------------------+
 | Department Name      |     The Department Name (subset of the Lead Organisation)  |
 +----------------------+------------------------------------------------------------+
-| Participant Org ID   |     The GTR ID of a participant Organisation               |
+| Participant Org ID   |     The GtR ID of a Participant Organisation               |
 +----------------------+------------------------------------------------------------+
-| Participant Org Name |     The Name of a participant Organisation.                |
+| Participant Org Name |     The Name of a Participant Organisation.                |
 +----------------------+------------------------------------------------------------+
-| Project Partner ID   |     The GTR ID of a Project Partner                        |
+| Project Partner ID   |     The GtR ID of a Project Partner                        |
 +----------------------+------------------------------------------------------------+
 | Project Partner Name |     The Name of a Project Partner                          |
 +----------------------+------------------------------------------------------------+
@@ -87,35 +89,35 @@ The following data is stored from EPSRC queries:
 
 CORDIS Data
 -------------------
-CORDIS data is extracted from the full .CSV so all the data is available. The following is an extract of the most useful datapoints.
+CORDIS data is extracted from the full .CSV so all the data is available. The following, most useful, datapoints are retained.
 
 
 +----------------------+------------------------------------------------------------+
 | Data Name            |     Data Description                                       |
 +======================+============================================================+
-| id                   |     The CORDIS ID of the project                           |
+| id                   |     The CORDIS ID of the project.                          |
 +----------------------+------------------------------------------------------------+
-| title                |     The project's Title                                    |
+| title                |     The project's Title.                                   |
 +----------------------+------------------------------------------------------------+
-| startDate            |     The start Date of the H02020 funding                   |
+| startDate            |     The start Date of the H2020 funding.                   |
 +----------------------+------------------------------------------------------------+
-| endDate              |     The end Date of the H02020 funding                     |
+| endDate              |     The end Date of the H2020 funding.                     |
 +----------------------+------------------------------------------------------------+
-| projectUrl           |     The URL (web-access) of the project                    |
+| projectUrl           |     The URL (web-access) of the project.                   |
 +----------------------+------------------------------------------------------------+
 | objective            |     The Description of the project's goals.                |
 +----------------------+------------------------------------------------------------+
 | totalCost            |     The Total Value of spending on the project.            |
 +----------------------+------------------------------------------------------------+
-| coordinator          |     The Name of the lead organisation.                     |
+| coordinator          |     The Name of the Lead Organisation.                     |
 +----------------------+------------------------------------------------------------+
-| coordinatorCountry   |     The Country of the lead organisation                   |
+| coordinatorCountry   |     The Country of the Lead Organisation.                  |
 +----------------------+------------------------------------------------------------+
-| participants         |     The Name(s) of Participant organisations               |
+| participants         |     The Name(s) of Participant Organisations.              |
 +----------------------+------------------------------------------------------------+
-| participantCountries |     The Countries where Participant Organisations reside   |
+| participantCountries |     The Countries where Participant Organisations reside.  |
 +----------------------+------------------------------------------------------------+
-| subjects             |     The search term(s) that returned the given project     |
+| subjects             |     The search term(s) that returned the given project.    |
 +----------------------+------------------------------------------------------------+
 
 Licensing

@@ -46,7 +46,7 @@
 <h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
 <p>For ease of use I’ve compiled some ‘recipes’ that can be used out of the box to start grabbing data from GTR and CORDIS.</p>
 <p>In order for these to work you will need to have created a ‘Trawl Keywords.txt’ file and stored it in the same directory as the .py files.</p>
-<p>These are stored in Mapping_Recipes.py and reproduced here for clarities sake.</p>
+<p>These are stored in Mapping_Recipes.py and reproduced here for clarity.</p>
 </div>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
@@ -72,7 +72,7 @@
 <h2>Recipes<a class="headerlink" href="#recipes" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="firstrun">
 <h3>FirstRun<a class="headerlink" href="#firstrun" title="Permalink to this headline">¶</a></h3>
-<p>FirstRun should be used the first time you are instantiating a project’s search. It will safely create fresh DataFrames, download the latest CSV files and unify the data once searching is done.</p>
+<p>FirstRun should be used the first time you are launching a project’s search. It will safely create fresh DataFrames, download the latest CSV files and unify the data once searching is done.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">firstRun</span><span class="p">():</span>
 
     <span class="kn">import</span> <span class="nn">dfClassConstructor</span> <span class="kn">as</span> <span class="nn">map</span>
@@ -95,8 +95,8 @@
 <h3>updateMapping<a class="headerlink" href="#updatemapping" title="Permalink to this headline">¶</a></h3>
 <p>updateMapping should be used anytime you are performing further searches on a pre-existing project (i.e. you have run firstRun before and since modified the Trawl Keywords or are checking for updates on the same set of words).</p>
 <p>It will check whether the CORDIS CSV has been updated and if so download the latest file.
-Instead of creating fresh dataframes updateMapping will look for the pre-existing pickled ones. If these are not found it will crash (TBF).
-It will then run the search as before, skipping any duplicate values and storing the results.</p>
+Instead of creating fresh dataframes updateMapping will look for the pre-existing pickled ones.
+It will then run the search as before, skipping any duplicate values, and storing the results.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">updateMapping</span><span class="p">():</span>
 
     <span class="kn">import</span> <span class="nn">dfClassConstructor</span> <span class="kn">as</span> <span class="nn">map</span>
