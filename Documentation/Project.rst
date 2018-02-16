@@ -38,15 +38,17 @@ Unified data refers to the commonly shared datapoints between the GtR and CORDIS
 +=============+============================================================+
 | projName    |     The Name of the project                                |
 +-------------+------------------------------------------------------------+
-| projDesc    |     The Project's Description of the work being done.      |
+| projDesc    |     The Project's Description of the work being done       |
 +-------------+------------------------------------------------------------+
-| projLead    |     The Lead Organisation of the project.                  |
+| projLead    |     The Lead Organisation of the project                   |
 +-------------+------------------------------------------------------------+
 | projCollab  |     The Collaborators working on the project               |
 +-------------+------------------------------------------------------------+
-| projGrouping|     The Search Term(s) that returned the given project.    |
+| projFunding |     The funding amount received for the project            |
 +-------------+------------------------------------------------------------+
-| projSource  |     Lists the data source point, GtR or CORDIS.            |
+| projGrouping|     The Search Term(s) that returned the given project     |
++-------------+------------------------------------------------------------+
+| projSource  |     Lists the data source point, GtR or CORDIS             |
 +-------------+------------------------------------------------------------+
 
 GtR Data
