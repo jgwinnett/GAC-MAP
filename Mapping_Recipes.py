@@ -34,7 +34,7 @@ def exportUnified():
     mapBot.exportDF_CSV()
     mapBot.exportDF_excel()
 
-# updateMapping()#
-#firstRun()
-# exportUnified()
-# classifyResults()
+firstRun()
+#updateMapping()
+#exportUnified()
+#classifyResults()

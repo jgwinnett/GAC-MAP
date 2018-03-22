@@ -112,11 +112,11 @@ class mappingUnified():
 
     def classiDFUpdate(self):
 
-        if os.path.exists(excelImportPath):
+        if os.path.exists(self.excelImportPath):
             print("Excel sheet imported")
             tempDF = pd.read_excel(self.excelImportPath)
 
-        elif os.path.exists(csvImportPath):
+        elif os.path.exists(self.csvImportPath):
             tempDF = pd.read_csv(self.csvImportPath)
         else:
             print("No classified CSV or Excel file found - terminating program.")
