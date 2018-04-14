@@ -590,7 +590,11 @@ class CORDIS_Mapping(mappingUnified):
         if os.path.isfile(self.csvPath):
 
             modDate = self.checkCSVDate()
-            meta = json.load(open(self.csvMetaPath))
+            try:
+                meta = json.load(open(self.csvMetaPath))
+            except IOError:
+                self.makeMetaData()
+                meta = json.load(open(self.csvMetaPath))
 
             if meta["modDate"] != modDate:
                 print("Newer CSV version detected, downloading...")
