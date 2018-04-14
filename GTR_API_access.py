@@ -80,7 +80,7 @@ class GTR_API():
             except KeyError:            # lazy catching again
                     self.incorrectFieldChoice()
 
-        self.baseURL += self.query + '&'
+        self.baseURL += '"' + self.query + '"' + '&'
 
     def URLConstructor(self):
 

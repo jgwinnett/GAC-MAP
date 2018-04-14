@@ -1,5 +1,0 @@
-"5G"
-"Connected Vehicles"
-Autonomous Vehicles
-CAV
-LTE-V
