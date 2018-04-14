@@ -728,7 +728,7 @@ class CORDIS_Mapping(mappingUnified):
 
         self.openDF()
         subDF = df[['title','objective','coordinator','participants','totalCost', 'searchedTerm']]
-        subDF['participants'] = subDF['participants'].apply(lambda x: x.split(';'))
+        subDF['participants'] = subDF['participants'].apply(lambda x: x.split(';') if type(x) == str else x)
         subDF.loc[:,'projSource'] = 'CORDIS'
         subDF.loc[:,'projApplic'] = ''
         subDF = subDF[['title','objective','coordinator','participants','totalCost', 'searchedTerm','projSource', 'projApplic']]
