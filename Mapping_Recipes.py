@@ -36,5 +36,5 @@ def exportUnified():
 
 firstRun()
 #updateMapping()
-#exportUnified()
+exportUnified()
 #classifyResults()

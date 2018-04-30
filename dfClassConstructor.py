@@ -74,6 +74,7 @@ class mappingUnified():
             yesNo = input('Confirm over-write:   ').lower()
 
             if yesNo == "yes":
+
                 self.buildDF()
             else:
                 self.openDF()
@@ -545,7 +546,10 @@ class GTR_Mapping(mappingUnified):
         subDF['projSource'] = 'GTR'
         subDF['projApplic'] = ''
         subDF = subDF.reset_index()
+        subDF['Participant Org Name'] = subDF['Participant Org Name'].apply(lambda x: x if type(x) == list else [] )
+        subDF['Project Partner Name'] = subDF['Project Partner Name'].apply(lambda x: x if type(x) == list else [] )
         subDF['collab'] = subDF[['Participant Org Name', 'Project Partner Name']].apply(lambda x: x[0] + x[1], axis = 1).values
+        subDF['Project Title'] = subDF['Project Title'].apply(lambda x: str(x[0]) if type(x) == list else x)
 
         for col in subDF:
             subDF[col] = subDF[col].apply(lambda x: x if x else '')

@@ -80,11 +80,30 @@ class GTR_API():
             except KeyError:            # lazy catching again
                     self.incorrectFieldChoice()
 
-        self.baseURL += '"' + self.query + '"' + '&'
+
 
     def URLConstructor(self):
 
         """ Combines 'base' URL with field selection. """
+
+        multiword = self.query.split(" ")
+        newQuery = ""
+
+        for i, val in enumerate(multiword):
+
+            if i != 0:
+                newQuery += "&q=" + val 
+            else:
+                newQuery = val
+
+        self.baseURL += newQuery + "&"
+
+
+
+        #self.baseURL += self.query + '&'
+
+
+
         self.URL = self.baseURL + self.fields + 's=100'
         print(self.URL)
 
