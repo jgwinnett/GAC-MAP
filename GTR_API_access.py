@@ -92,7 +92,7 @@ class GTR_API():
         for i, val in enumerate(multiword):
 
             if i != 0:
-                newQuery += "&q=" + val 
+                newQuery += "&q=" + val
             else:
                 newQuery = val
 

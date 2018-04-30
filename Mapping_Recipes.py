@@ -25,7 +25,7 @@ def classifyResults():
 
     mapBot = map.mappingUnified()
     mapBot.DFClassiCheck()
-    mapBot.pickleDeleter(self.unifiedDFPath)
+    mapBot.pickleDeleter(mapBot.dfUnifiedPath)
 
 def exportUnified():
 
@@ -35,6 +35,6 @@ def exportUnified():
     mapBot.exportDF_excel()
 
 #firstRun()
-updateMapping()
-exportUnified()
-#classifyResults()
+#updateMapping()
+#exportUnified()
+classifyResults()
